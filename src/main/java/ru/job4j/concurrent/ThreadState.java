@@ -14,10 +14,11 @@ public class ThreadState {
         first.start();
         second.start();
         while (first.getState() != Thread.State.TERMINATED
-                && second.getState() != Thread.State.TERMINATED) {
-            System.out.println(first.getName() + System.lineSeparator() + second.getName());
+                || second.getState() != Thread.State.TERMINATED) {
+            System.out.println(first.getState() + System.lineSeparator() + second.getState());
 
         }
+        System.out.println(first.getState() + System.lineSeparator() + second.getState());
         System.out.println("The End");
     }
 }
