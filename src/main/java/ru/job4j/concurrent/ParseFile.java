@@ -3,7 +3,7 @@ package ru.job4j.concurrent;
 import java.io.*;
 import java.util.function.Predicate;
 
-public class ParseFile {
+public final class ParseFile {
 
     private final File file;
 
@@ -25,7 +25,7 @@ public class ParseFile {
         StringBuilder output = new StringBuilder();
         try (InputStream i = new BufferedInputStream(new FileInputStream(file))) {
             int data;
-            while ((data = i.read()) > 0) {
+            while ((data = i.read()) != -1) {
                 output.append((char) data);
                 if (filter.test((char) data)) {
                     output.append((char) data);

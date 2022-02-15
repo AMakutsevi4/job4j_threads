@@ -2,7 +2,7 @@ package ru.job4j.concurrent;
 
 import java.io.*;
 
-public class SaveFile {
+public final class SaveFile {
 
     private final File file;
 
