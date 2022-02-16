@@ -1,14 +1,11 @@
 package ru.job4j.transfer;
 
-import net.jcip.annotations.ThreadSafe;
-
 import java.util.Objects;
 
-@ThreadSafe
 public class User {
 
-    private final int id;
-    private final int amount;
+    private int id;
+    private int amount;
 
     public User(int id, int amount) {
         this.id = id;
@@ -21,6 +18,14 @@ public class User {
 
     public int getAmount() {
         return amount;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override
@@ -47,4 +52,5 @@ public class User {
                 + ", amount=" + amount
                 + '}';
     }
+
 }
