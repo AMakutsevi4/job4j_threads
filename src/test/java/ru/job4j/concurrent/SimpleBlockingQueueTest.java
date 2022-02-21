@@ -1,11 +1,10 @@
 package ru.job4j.concurrent;
 
-
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -89,7 +88,7 @@ public class SimpleBlockingQueueTest {
         Thread second = new Thread(
                 () -> {
                     int i = 0;
-                    while (i < 6) {
+                    while (i < 12) {
                         i++;
                         try {
                             queue.poll();
@@ -105,7 +104,7 @@ public class SimpleBlockingQueueTest {
         second.join();
     }
 
-    @Ignore
+
     @Test
     public void whenFetchAllThenGetIt() throws InterruptedException {
         final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
