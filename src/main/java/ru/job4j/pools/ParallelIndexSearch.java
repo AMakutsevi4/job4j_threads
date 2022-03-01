@@ -33,7 +33,7 @@ public class ParallelIndexSearch<T> extends RecursiveTask<Integer> {
     }
 
     private int sort() {
-        for (int i = start; i < end; i++) {
+        for (int i = start; i <= end; i++) {
             if (arr[i].equals(key)) {
                 return i;
             }
@@ -41,7 +41,7 @@ public class ParallelIndexSearch<T> extends RecursiveTask<Integer> {
         return -1;
     }
 
-    private static <T> int search(T[] array, T element) {
+    public static <T> int search(T[] array, T element) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         return forkJoinPool.invoke(new ParallelIndexSearch<>(array, element, 0, array.length - 1));
     }
