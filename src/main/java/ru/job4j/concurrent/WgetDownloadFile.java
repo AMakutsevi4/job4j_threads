@@ -31,12 +31,12 @@ public class WgetDownloadFile implements Runnable {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
                 if (bytesWritten >= speed) {
                     long time = System.currentTimeMillis() - start;
-                    bytesWritten = 0;
-                    if (time < 1000) {
+                    if (time <= 1000) {
                         Thread.sleep(1000 - time);
                     }
+                    bytesWritten = 0;
+                    start = System.currentTimeMillis();
                 }
-                start = System.currentTimeMillis();
             }
         } catch (IOException | InterruptedException e) {
             Thread.currentThread().isInterrupted();
