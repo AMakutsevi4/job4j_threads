@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
 
 public class WgetDownloadFile implements Runnable {
     private final String url;
@@ -19,23 +18,30 @@ public class WgetDownloadFile implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Speed: " + speed + " B/s.");
         try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
              FileOutputStream fileOutputStream = new FileOutputStream(nameFile)) {
-            byte[] dataBuffer = new byte[speed];
+            byte[] dataBuffer = new byte[1024];
             int bytesRead;
+            long bytesWritten = 0;
             long start = System.currentTimeMillis();
-            while ((bytesRead = in.read(dataBuffer, 0, speed)) != -1) {
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
-                long finish = System.currentTimeMillis();
-                long rsl = finish - start;
-                if (speed > rsl) {
-                    Thread.sleep(speed - rsl);
+                bytesWritten += bytesRead;
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+                if (bytesWritten >= speed) {
+                    long time = System.currentTimeMillis() - start;
+                    if (time <= 1000) {
+                        Thread.sleep(1000 - time);
+                    }
+                    bytesWritten = 0;
+                    start = System.currentTimeMillis();
                 }
-                start = System.currentTimeMillis();
             }
         } catch (IOException | InterruptedException e) {
             Thread.currentThread().isInterrupted();
         }
+        System.out.print("End.");
     }
 
     private static void validateArgs(String[] args) {
